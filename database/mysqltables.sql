@@ -307,3 +307,68 @@ ON DUPLICATE KEY UPDATE Email=Email;
 INSERT INTO `contract` (CONTRACT_ID, Start_Date, Amount, CLIENT_ID, AGENT_ID)
 VALUES (2, CURDATE(), 750000.00, 1, 2)
 ON DUPLICATE KEY UPDATE Amount=Amount;
+
+
+CREATE USER 'admin'@'localhost' IDENTIFIED BY '123456789';
+GRANT ALL PRIVILEGES ON real_estate_db.* TO 'admin'@'localhost';
+FLUSH PRIVILEGES;
+
+
+
+SHOW GRANTS FOR 'Ajith'@'localhost';
+SHOW GRANTS FOR 'RDBMS'@'localhost';
+
+UPDATE agent
+SET Fname = 'Jane', Lname = 'Doe', LicenseNumber = 'LIC-NY-11111'
+WHERE AGENT_ID = 1;
+
+UPDATE agent
+SET Fname = 'Bob', Lname = 'Johnson', LicenseNumber = 'LIC-NY-22222'
+WHERE AGENT_ID = 2;
+
+UPDATE agent
+SET Fname = 'David', Lname = 'Miller', LicenseNumber = 'LIC-KA-66666', CommissionPerc = 5.5
+WHERE AGENT_ID = 6;
+
+UPDATE agent
+SET Fname = 'Rachel', Lname = 'Green', LicenseNumber = 'LIC-TN-77777', CommissionPerc = 5.0
+WHERE AGENT_ID = 7;
+
+UPDATE agent
+SET Fname = 'Adam', Lname = 'Smith', LicenseNumber = 'LIC-KA-88888', CommissionPerc = 4.8
+WHERE AGENT_ID = 8;
+
+UPDATE agent
+SET Fname = 'Alice', Lname = 'Ivers', LicenseNumber = 'LIC-KA-99999', CommissionPerc = 6.0
+WHERE AGENT_ID = 11;
+
+INSERT INTO agentphone (AGENT_ID, PhoneNumber)
+VALUES
+(1, '9876543210'),
+(2, '9876543211'),
+(6, '9123456780'),
+(7, '9123456781'),
+(8, '9123456782'),
+(11, '9123456783');
+
+-- Contract for Property 1 (Agent 1, Client 1)
+INSERT INTO contract (Start_Date, End_Date, Amount, CLIENT_ID, AGENT_ID)
+VALUES ('2025-01-15', '2025-07-15', 500000.00, 1, 1);
+
+-- Contract for Property 2 (Agent 6, Client 5)
+INSERT INTO contract (Start_Date, End_Date, Amount, CLIENT_ID, AGENT_ID)
+VALUES ('2025-02-01', '2025-08-01', 134555.00, 5, 6);
+
+-- Contract for Property 3 (Agent 8, Client 5)
+INSERT INTO contract (Start_Date, End_Date, Amount, CLIENT_ID, AGENT_ID)
+VALUES ('2025-03-10', '2025-09-10', 1399996.00, 5, 8);
+
+-- Contract for Property 4 (Agent 8, Client 9)
+INSERT INTO contract (Start_Date, End_Date, Amount, CLIENT_ID, AGENT_ID)
+VALUES ('2025-04-20', '2025-10-20', 899999.00, 9, 8);
+INSERT INTO propertycontract (PROPERTY_ID, CONTRACT_ID)
+VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4);
