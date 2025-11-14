@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>High-Value Clients</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/admin_dashboard">Admin Panel</a>
+        <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+    </nav>
+    <div class="container mt-4">
+        <h1>High-Value Clients Report</h1>
+        <p>Top clients sorted by total payment amount.</p>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Client ID</th>
+                    <th>Client Name</th>
+                    <th>Number of Payments</th>
+                    <th>Total Payments</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in clients %}
+                <tr>
+                    <td>{{ c.CLIENT_ID }}</td>
+                    <td>{{ c.Name }}</td>
+                    <td>{{ c.NumPayments }}</td>
+                    <td>${{ "%.2f"|format(c.TotalPayments) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

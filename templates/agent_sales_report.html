@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Agent Sales Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/admin_dashboard">Admin Panel</a>
+        <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+    </nav>
+    <div class="container mt-4">
+        <h1>Agent Sales Report (Function Demo)</h1>
+        <p>This form uses the <code>fn_GetAgentTotalSales()</code> MySQL function to calculate total sales for an agent.</p>
+
+        <form method="POST" class="card p-4">
+            <div class="form-group">
+                <label for="agent_id">Select an Agent:</label>
+                <select name="agent_id" class="form-control" required>
+                    <option value="">-- Choose Agent --</option>
+                    {% for agent in agents %}
+                    <option value="{{ agent.AGENT_ID }}" 
+                            {% if agent.AGENT_ID == agent_id_selected %}selected{% endif %}>
+                        {{ agent.Name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate Total Sales</button>
+        </form>
+
+        {% if total_sales is not none %}
+        <div class="alert alert-success mt-4">
+            <h4>Total Sales for Selected Agent:</h4>
+            <h2>${{ "%.2f"|format(total_sales) }}</h2>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

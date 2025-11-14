@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Dashboard</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <p>Welcome, Admin {{ current_user.username }}!</p>
+        <nav>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="/properties">Properties</a></li>
+                <li class="nav-item"><a class="nav-link" href="/agent_search">Agent Search</a></li>
+                <li class="nav-item"><a class="nav-link" href="/payments">Payments</a></li>
+                
+                <li class="nav-item"><a class="nav-link" href="/agent_sales_report">Agent Sales Report</a></li>
+                <li class="nav-item"><a class="nav-link" href="/high_value_clients">High-Value Clients</a></li>
+                <li class="nav-item"><a class="nav-link" href="/add_commission">Add Commission</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+
+        <h3>Database Statistics</h3>
+        <div class="stats-container">
+            <div class="stat-card">
+                <h4>Total Clients</h4>
+                <p>{{ stats.client_count }}</p>
+            </div>
+            <div class="stat-card">
+                <h4>Total Agents</h4>
+                <p>{{ stats.agent_count }}</p>
+            </div>
+            <div class="stat-card">
+                <h4>Total Properties</h4>
+                <p>{{ stats.property_count }}</p>
+            </div>
+            <div class="stat-card">
+                <h4>Total Payment</h4>
+                <p>${{ '{:,.2f}'.format(stats.total_payment) if stats.total_payment else '0.00' }}</p>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

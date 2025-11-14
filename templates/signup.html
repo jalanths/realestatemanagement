@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center">Create an Account</h2>
+                        
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                          {% if messages %}
+                            {% for category, message in messages %}
+                              <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }}" role="alert">
+                                {{ message }}
+                              </div>
+                            {% endfor %}
+                          {% endif %}
+                        {% endwith %}
+                        
+                        <form action="/signup" method="POST">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm_password">Confirm Password:</label>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Sign up as:</label>
+                                <select class="form-control" id="role" name="role" onchange="toggleCommissionField()">
+                                    <option value="Client">Client</option>
+                                    <option value="Agent">Agent</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="commission-group" style="display: none;">
+                                <label for="commission_perc">Commission Percentage (%)</label>
+                                <input type="number" step="0.01" name="commission_perc" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                        </form>
+                        <div class="text-center mt-3">
+                            <p>Already have an account? <a href="{{ url_for('index') }}">Login here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleCommissionField() {
+            var role = document.getElementById('role').value;
+            var commissionGroup = document.getElementById('commission-group');
+            if (role === 'Agent') {
+                commissionGroup.style.display = 'block';
+            } else {
+                commissionGroup.style.display = 'none';
+            }
+        }
+        // Run on page load to set initial state
+        toggleCommissionField();
+    </script>
+</body>
+</html>

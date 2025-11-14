@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Agent Search</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/admin_dashboard">Admin Panel</a>
+        <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+    </nav>
+    <div class="container mt-4">
+        <h1>Agent Search (Nested Query Demo)</h1>
+        <p>Find agents in an office in a specific city.</p>
+        <p><code>SELECT ... WHERE OFFICE_ID IN (SELECT ... WHERE City = ?)</code></p>
+        
+        <form method="POST" class="form-inline mb-4">
+            <input type="text" name="city" class="form-control mr-2" placeholder="Enter City" value="{{ city }}">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        {% if agents %}
+        <h3>Search Results for "{{ city }}"</h3>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr><th>Agent ID</th><th>Name</th><th>License Number</th></tr>
+            </thead>
+            <tbody>
+                {% for agent in agents %}
+                <tr>
+                    <td>{{ agent.AGENT_ID }}</td>
+                    <td>{{ agent.Name }}</td>
+                    <td>{{ agent.LicenseNumber }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>

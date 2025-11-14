@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Manual Commission</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/admin_dashboard">Admin Panel</a>
+    </nav>
+    <div class="container mt-4">
+        <h1>Add Manual Commission</h1>
+        <form method="POST" class="card p-4">
+            <div class="form-group">
+                <label for="agent_id">Select Agent</label>
+                <select name="agent_id" class="form-control" required>
+                    <option value="">-- Select an Agent --</option>
+                    {% for agent in agents %}
+                    <option value="{{ agent.AGENT_ID }}">{{ agent.Name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount">Commission Amount ($)</label>
+                <input type="number" step="0.01" name="amount" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="percentage">Commission Percentage (%)</label>
+                <input type="number" step="0.01" name="percentage" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="earned_date">Earned Date</label>
+                <input type="date" name="earned_date" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Commission</button>
+        </form>
+    </div>
+</body>
+</html>

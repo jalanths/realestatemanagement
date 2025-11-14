@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Payments (Procedure GUI)</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/admin_dashboard">Admin Panel</a>
+        <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+    </nav>
+    <div class="container mt-4">
+        <h1>Payments List <a href="{{ url_for('add_payment') }}" class="btn btn-primary btn-sm ml-3">Add New Payment</a></h1>
+        <p>Clicking the button runs the <code>sp_GenerateCommission</code> stored procedure.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }}" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Payment No</th>
+                    <th>Contract ID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in payments %}
+                <tr>
+                    <td>{{ p.Payment_No }}</td>
+                    <td>{{ p.CONTRACT_ID }}</td>
+                    <td>{{ p.Payment_Date }}</td>
+                    <td>${{ "%.2f"|format(p.Amount) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

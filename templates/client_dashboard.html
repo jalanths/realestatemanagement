@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+        <a class="navbar-brand" href="#">Client Portal</a>
+        <a href="/logout" class="btn btn-outline-light ml-auto">Logout</a>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>My Dashboard</h1>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                My Payment History
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr><th>Payment Date</th><th>Contract ID</th><th>Amount</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for p in payments %}
+                        <tr>
+                            <td>{{ p.Payment_Date }}</td>
+                            <td>{{ p.CONTRACT_ID }}</td>
+                            <td>${{ "%.2f"|format(p.Amount) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                My Properties
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Property ID</th>
+                            <th>Address</th>
+                            <th>Price</th>
+                            <th>Type</th>
+                            <th>Size (sq. ft.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prop in properties %}
+                        <tr>
+                            <td>{{ prop.PROPERTY_ID }}</td>
+                            <td>{{ prop.Street }}, {{ prop.City }}, {{ prop.State }} {{ prop.ZIP }}</td>
+                            <td>${{ "%.2f"|format(prop.PRICE) }}</td>
+                            <td>{{ prop.TYPE }}</td>
+                            <td>{{ prop.SIZE }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
